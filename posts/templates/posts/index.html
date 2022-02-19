@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Hottest Articles {% endblock %}
+
+{% block content %}
+<header class="masthead" style="background-image: url({% static 'assets/img/home-bg.jpg' %})">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>Best Articles</h1>
+                            {% if user.is_authenticated %} <span class="subheading">Hello, {{user.first_name}}!</span> {% endif %}
+                            <span class="subheading">Learn something new everyday</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Main Content-->
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    {% for post in posts %}
+                    {% if not post.is_public and not user.is_authenticated%}
+
+                    {% elif not post.is_public and user.is_authenticated or post.is_public%}
+                    <!-- Post preview-->
+                    <div class="post-preview">
+                        <a href="{% url 'post-details' post.slug %}">
+                            <h2 class="post-title">{{post.title}}</h2>
+                            <h3 class="post-subtitle">{{post.subtitle}}</h3>
+                        </a>
+                        <p class="post-meta">
+                            Posted by
+                            {{ post.author.first_name }} {{ post.author.last_name }}
+                            on {{post.date}}
+                        </p>
+                    </div>
+                    <!-- Divider-->
+                    <hr class="my-4" />
+                    {% endif %}
+                    {% endfor %}
+                    {%if user.is_author%}
+                    <!-- Pager-->
+                    <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="{% url 'new-post' %}">Create New Post</a></div>
+                    {%endif%}
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

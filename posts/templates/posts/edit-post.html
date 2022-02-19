@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %} Edit Post {% endblock %}
+{% load static %}
+
+{% block content %}
+
+<header class="masthead" style="background-image: url('{{post.img_url}}')">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>Edit Post</h1>
+                            <span class="subheading"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+<div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+
+        <form method="post" novalidate>
+          {% csrf_token %}
+            {% for field in form %}
+            <div class="create-form form-floating {%if field.errors%} errors-form {%endif%}">
+                {{field.label_tag}}
+                {{field}}
+                {{field.errors}}
+            </div>
+          {% endfor %}
+            <div class="d-flex justify-content-end mb-4"><button class="btn btn-primary text-uppercase">Update</button></div>
+
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}
