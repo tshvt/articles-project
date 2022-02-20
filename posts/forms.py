@@ -14,7 +14,8 @@ class CreatePostForm(forms.ModelForm):
         exclude = ['date', 'slug']
         labels = {
             'img_url': "Image URL",
-            'is_public': "Make post public?"
+            'is_public': "Make post public?",
+            'title': 'Title (under 30 characters)'
         }
         widgets = {
             'author': forms.TextInput(attrs={'value': '', 'id': 'author_user', 'type': 'hidden'}),
@@ -28,7 +29,8 @@ class EditPostForm(forms.ModelForm):
         exclude = ['date', 'slug', 'author']
         labels = {
             'img_url': "Image URL",
-            'is_public': "Make post public?"
+            'is_public': "Make post public?",
+            'title': 'Title (under 30 characters)'
         }
         widgets = {
             'is_public': forms.Select(choices=CHOICES)
